@@ -7,6 +7,7 @@ import ru.job4j.rest.domain.Person;
 import ru.job4j.rest.repository.PersonRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/person")
@@ -41,13 +42,17 @@ public class PersonController {
 
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Person person) {
-        this.persons.save(person);
-        return ResponseEntity.ok().build();
+        Optional<Person> update = Optional.of(this.persons.save(person));
+        return update.isPresent() ?  ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
         Person person = new Person();
+        var temp = this.persons.findById(id);
+        if (temp.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
         person.setId(id);
         this.persons.delete(person);
         return ResponseEntity.ok().build();
