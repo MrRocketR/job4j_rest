@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @SpringBootApplication
-public class UrlApp {
+public class Job4jAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(UrlApp.class, args);
+        SpringApplication.run(Job4jAuthApplication.class, args);
     }
 
     @Bean
