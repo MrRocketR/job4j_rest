@@ -1,4 +1,4 @@
-package ru.job4j.rest.filter;
+package ru.job4j.rest.config;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
@@ -14,9 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static ru.job4j.rest.filter.JWTAuthenticationFilter.HEADER_STRING;
-import static ru.job4j.rest.filter.JWTAuthenticationFilter.SECRET;
-import static ru.job4j.rest.filter.JWTAuthenticationFilter.TOKEN_PREFIX;
+import static ru.job4j.rest.config.JWTAuthenticationFilter.*;
+
+/**
+ * Разрешение
+ * Второй фильтр будет проверять, что в заголовке запроса
+ * есть token и если его нет, то отправлять статус 403.
+ */
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 
     public JWTAuthorizationFilter(AuthenticationManager authManager) {

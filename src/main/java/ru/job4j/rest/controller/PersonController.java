@@ -5,8 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import ru.job4j.rest.domain.Person;
-import ru.job4j.rest.repository.PersonRepository;
+import ru.job4j.rest.model.Person;
 import ru.job4j.rest.service.PersonService;
 
 import java.util.List;

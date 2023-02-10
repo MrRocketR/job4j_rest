@@ -12,11 +12,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import ru.job4j.rest.filter.JWTAuthenticationFilter;
-import ru.job4j.rest.filter.JWTAuthorizationFilter;
-import ru.job4j.rest.service.PersonDetailsService;
 
-import static ru.job4j.rest.filter.JWTAuthenticationFilter.SIGN_UP_URL;
+import static ru.job4j.rest.config.JWTAuthenticationFilter.SIGN_UP_URL;
+
 
 @EnableWebSecurity
 public class WebSecurity extends WebSecurityConfigurerAdapter {

@@ -1,7 +1,6 @@
 package ru.job4j.rest.service;
-
 import org.springframework.stereotype.Service;
-import ru.job4j.rest.domain.Person;
+import ru.job4j.rest.model.Person;
 import ru.job4j.rest.repository.PersonRepository;
 
 import java.util.List;

@@ -5,9 +5,18 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import ru.job4j.rest.domain.Person;
+import ru.job4j.rest.model.Person;
 
 import static java.util.Collections.emptyList;
+
+/**
+ * Как и в Spring MVC нужно создать сервис UserDetailsService.
+ * Этот сервис будет загружать в SecutiryHolder
+ * детали авторизованного пользователя.
+ *
+ * User - это специальный User из
+ * org.springframework.security.core.userdetails.User;
+ */
 @Service
 public class PersonDetailsService implements UserDetailsService {
     private final PersonService personService;
