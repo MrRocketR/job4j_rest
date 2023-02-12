@@ -28,13 +28,20 @@ public class PersonController {
         return personService.findAll();
     }
 
+
+
+
+
+
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable int id) {
         var person = this.personService.findById(id);
-        return new ResponseEntity<Person>(
-                person.orElse(new Person()),
-                person.isPresent() ? HttpStatus.OK : HttpStatus.NOT_FOUND
-        );
+        if (person.isPresent()) {
+            return new ResponseEntity<>(person.get(), HttpStatus.OK);
+        } else {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "Person is not found");
+        }
     }
 
     @PutMapping("/")
