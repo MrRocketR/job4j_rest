@@ -28,20 +28,11 @@ public class PersonController {
         return personService.findAll();
     }
 
-
-
-
-
-
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable int id) {
         var person = this.personService.findById(id);
-        if (person.isPresent()) {
-            return new ResponseEntity<>(person.get(), HttpStatus.OK);
-        } else {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
-                    "Person is not found");
-        }
+        return new ResponseEntity<>(person.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Person is not found")), HttpStatus.OK);
     }
 
     @PutMapping("/")
@@ -68,6 +59,14 @@ public class PersonController {
      */
     @PostMapping("/sign-up")
     public ResponseEntity<Void> signUp(@RequestBody Person person) {
+        var username = person.getLogin();
+        var password = person.getPassword();
+        if (username == null || password == null) {
+            throw new NullPointerException("Username and password mustn't be empty");
+        }
+        if (password.length() < 6) {
+            throw new IllegalArgumentException("Invalid password");
+        }
         person.setPassword(encoder.encode(person.getPassword()));
         personService.save(person);
         return ResponseEntity.ok().build();
