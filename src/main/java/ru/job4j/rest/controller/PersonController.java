@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.util.MultiValueMapAdapter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ru.job4j.rest.dto.PersonDTO;
 import ru.job4j.rest.model.Person;
 import ru.job4j.rest.service.PersonService;
 
@@ -62,6 +63,19 @@ public class PersonController {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,
                     "No person found for update");
         }
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/")
+    public ResponseEntity<String> updatePassword(@RequestBody PersonDTO personDTO) {
+        Optional<Person> optionalPerson = personService.findByLogin(personDTO.getLogin());
+        if (optionalPerson.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND,
+                    "No person found for update");
+        }
+        Person person = optionalPerson.get();
+        person.setPassword(personDTO.getPassword());
+        personService.save(person);
         return ResponseEntity.ok().build();
     }
 
