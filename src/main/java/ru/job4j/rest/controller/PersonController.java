@@ -3,18 +3,21 @@ package ru.job4j.rest.controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.util.MultiValueMapAdapter;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import ru.job4j.rest.model.Person;
 import ru.job4j.rest.service.PersonService;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/persons")
 public class PersonController {
-    private  final PersonService personService;
+    private final PersonService personService;
     private BCryptPasswordEncoder encoder;
 
     public PersonController(PersonService personService,
@@ -23,16 +26,33 @@ public class PersonController {
         this.encoder = encoder;
     }
 
+    /***
+
+     @GetMapping("/all") public List<Person> findAll() {
+     return personService.findAll();
+     }
+     ***/
+
+
     @GetMapping("/all")
-    public List<Person> findAll() {
-        return personService.findAll();
+    public ResponseEntity findAll() {
+        List<Person> persons = personService.findAll();
+        Map<Integer, Person> body = new HashMap<>();
+        for (Person p : persons) {
+            body.put(p.getId(), p);
+        }
+        var entity = new ResponseEntity(
+                body,
+                HttpStatus.OK
+        );
+        return entity;
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable int id) {
         var person = this.personService.findById(id);
         return new ResponseEntity<>(person.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
-                        "Person is not found")), HttpStatus.OK);
+                "Person is not found")), HttpStatus.OK);
     }
 
     @PutMapping("/")
