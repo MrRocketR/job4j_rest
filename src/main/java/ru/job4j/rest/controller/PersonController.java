@@ -52,16 +52,18 @@ public class PersonController {
     @GetMapping("/{id}")
     public ResponseEntity<Person> findById(@PathVariable int id) {
         var person = this.personService.findById(id);
-        return person.isPresent() ?
-                new ResponseEntity<>(person.get(), HttpStatus.OK) : ResponseEntity.notFound().build();
+        return person.isPresent()
+                ? new ResponseEntity<>(person.get(), HttpStatus.OK)
+                : ResponseEntity.notFound().build();
 
     }
 
     @PutMapping("/")
     public ResponseEntity<Void> update(@RequestBody Person person) {
         Optional<Person> optionalPerson = personService.save(person);
-        return optionalPerson.isPresent() ?
-                ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return optionalPerson.isPresent()
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.notFound().build();
     }
 
     @PatchMapping("/")
@@ -79,8 +81,9 @@ public class PersonController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable int id) {
-        return personService.deleteById(id) ?
-                ResponseEntity.ok().build() : ResponseEntity.notFound().build();
+        return personService.deleteById(id)
+                ? ResponseEntity.ok().build()
+                : ResponseEntity.notFound().build();
     }
 
     /**
