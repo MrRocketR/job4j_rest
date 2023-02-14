@@ -93,12 +93,6 @@ public class PersonController {
     public ResponseEntity<Void> signUp(@RequestBody Person person) {
         var username = person.getLogin();
         var password = person.getPassword();
-        if (username == null || password == null) {
-            throw new NullPointerException("Username and password mustn't be empty");
-        }
-        if (password.length() < 6) {
-            throw new IllegalArgumentException("Invalid password");
-        }
         person.setPassword(encoder.encode(person.getPassword()));
         personService.save(person);
         return ResponseEntity.ok().build();

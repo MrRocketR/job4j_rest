@@ -6,7 +6,10 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
+
 @AllArgsConstructor
 @Data
 @Entity
@@ -21,8 +24,9 @@ public class Person {
     private int id;
 
     @Column(name = "login")
+    @NotNull(message = "Must not be null")
     private String login;
-
+    @NotNull(message = "Must not be null")
     @Column(name = "password")
     private String password;
 }
